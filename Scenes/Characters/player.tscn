@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3 uid="uid://bi8wg1xgno3ql"]
+
+[ext_resource type="Script" uid="uid://3m5sem1tbkq6" path="res://Scripts/Characters/Player/player.gd" id="1_40svl"]
+[ext_resource type="Texture2D" uid="uid://dtwh2p786qsf0" path="res://Assets-Bullet-Hell/Bullet Hell - Assets/Sprites/Spritesheet.png" id="2_cqrjx"]
+[ext_resource type="Script" uid="uid://dlc1p4uxspdot" path="res://Scripts/Characters/StateMachine/state_machine.gd" id="3_al8ar"]
+[ext_resource type="Script" uid="uid://tau0mqxdnv4v" path="res://Scripts/Characters/StateMachine/States/idle_state.gd" id="4_cqrjx"]
+[ext_resource type="Script" uid="uid://l2ss3epb35xq" path="res://Scripts/Characters/StateMachine/States/walk_state.gd" id="5_khnq4"]
+[ext_resource type="Script" uid="uid://b1abgkg6pm4ey" path="res://Scripts/Objects/node_pool.gd" id="6_khnq4"]
+[ext_resource type="PackedScene" uid="uid://drfxd44qjimn6" path="res://Scenes/Objects/bullet.tscn" id="7_utp2y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khnq4"]
+atlas = ExtResource("2_cqrjx")
+region = Rect2(480, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utp2y"]
+atlas = ExtResource("2_cqrjx")
+region = Rect2(512, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_khnq4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khnq4")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_utp2y")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bo1nx"]
+radius = 13.0
+height = 32.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_40svl")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 16)
+sprite_frames = SubResource("SpriteFrames_khnq4")
+animation = &"idle"
+offset = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_bo1nx")
+
+[node name="Muzzle" type="Node2D" parent="."]
+position = Vector2(-11, -3)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_al8ar")
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://dlc1p4uxspdot"
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_cqrjx")
+metadata/_custom_type_script = "uid://tau0mqxdnv4v"
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("5_khnq4")
+metadata/_custom_type_script = "uid://l2ss3epb35xq"
+
+[node name="PlayerBulletPool" type="Node" parent="."]
+script = ExtResource("6_khnq4")
+node_scene = ExtResource("7_utp2y")
