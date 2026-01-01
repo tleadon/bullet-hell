@@ -6,7 +6,7 @@ var cached_nodes: Array[Node2D]
 
 func create_new():
 	var node = node_scene.instantiate()
-	get_tree().get_root().add_child(node)
+	get_tree().get_root().add_child.call_deferred(node)
 	cached_nodes.append(node)
 	return node
 	
