@@ -1,8 +1,8 @@
 extends CharacterBody2D
 class_name PlayerController
 
-@export var curr_hp: int = 5
-@export var max_hp: int = 5
+@export var curr_hp: int = 50
+@export var max_hp: int = 50
 
 @export var shoot_rate: float = 0.1
 var last_shoot_time: float
@@ -29,7 +29,13 @@ func shoot():
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	bullet.move_dir = muzzle.global_position.direction_to(mouse_pos)
 
+func damage_flash():
+	anim.modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	anim.modulate = Color.WHITE
+
 func take_damage(damage: int) -> void:
 	curr_hp -= damage
+	damage_flash()
 	if curr_hp <= 0:
 		print("Player Died")

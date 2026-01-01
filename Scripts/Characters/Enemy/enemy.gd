@@ -78,9 +78,14 @@ func shoot():
 	bullet.global_position = muzzle.global_position
 	bullet.move_dir = muzzle.global_position.direction_to(player.global_position)
 
+func damage_flash():
+	sprite.modulate = Color.BLACK
+	await get_tree().create_timer(0.1).timeout
+	sprite.modulate = Color.WHITE
+
 func take_damage(damage: int) -> void:
 	curr_hp -= damage
-	print("currhp: ", curr_hp)
+	damage_flash()
 	if curr_hp <= 0:
 		GlobalSignals.OnEnemyDie.emit(self)
 		visible = false
