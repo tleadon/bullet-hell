@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://de4qbfq4y34s8"]
+
+[ext_resource type="PackedScene" uid="uid://drfxd44qjimn6" path="res://Scenes/Objects/bullet.tscn" id="1_jky4v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jky4v"]
+size = Vector2(12, 4)
+
+[node name="Bullet" instance=ExtResource("1_jky4v")]
+
+[node name="Sprite" parent="." index="0"]
+rotation = -1.5653664
+region_rect = Rect2(1172, 786, 7, 12)
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_jky4v")

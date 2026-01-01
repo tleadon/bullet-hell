@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bk0aywn0xdhyh"
+path="res://.godot/imported/PlayerAttack.wav-b3ce1dd3f4b7a8aa9bcb6ab60b3347fa.sample"
+
+[deps]
+
+source_file="res://Assets-Bullet-Hell/Bullet Hell - Assets/Audio/PlayerAttack.wav"
+dest_files=["res://.godot/imported/PlayerAttack.wav-b3ce1dd3f4b7a8aa9bcb6ab60b3347fa.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
