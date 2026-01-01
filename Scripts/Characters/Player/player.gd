@@ -11,16 +11,12 @@ var facing_direction: Vector2
 
 @onready var anim: AnimatedSprite2D = $Sprite
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_input = Input.get_vector("move_left","move_right","move_up","move_down")
 
 	if Input.is_action_pressed("shoot"):
 		if Time.get_unix_time_from_system() - last_shoot_time > shoot_rate:
 			shoot()
-
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shoot"):
-		shoot()
 
 func shoot():
 	last_shoot_time = Time.get_unix_time_from_system()
