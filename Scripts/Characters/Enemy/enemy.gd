@@ -9,7 +9,7 @@ class_name Enemy
 
 @export_group("Non-Movement Stats")
 @export var shoot_rate: float 
-@export var damage: float 
+@export var bullet_damage: float 
 @export var shoot_range: float
 @export var max_hp: int
 var curr_hp: int
@@ -28,12 +28,12 @@ var last_shoot_time: float
 func _ready() -> void:
 	curr_hp = max_hp
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	player_dir = global_position.direction_to(player.global_position)
 	sprite.flip_h = player_dir.x < 0
 	player_dist = global_position.distance_to(player.global_position)
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var move_dir = player_dir
 	var local_avoidance_dir = local_avoidance()
 	
@@ -78,8 +78,8 @@ func shoot():
 	bullet.global_position = muzzle.global_position
 	bullet.move_dir = muzzle.global_position.direction_to(player.global_position)
 
-func take_damage():
-	curr_hp -= 1
+func take_damage(damage: int) -> void:
+	curr_hp -= damage
 	print("currhp: ", curr_hp)
 	if curr_hp <= 0:
 		GlobalSignals.OnEnemyDie.emit(self)
