@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://4wcyptl2hhvv"]
+[gd_scene load_steps=10 format=4 uid="uid://4wcyptl2hhvv"]
 
 [ext_resource type="Texture2D" uid="uid://dtwh2p786qsf0" path="res://Assets-Bullet-Hell/Bullet Hell - Assets/Sprites/Spritesheet.png" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://bi8wg1xgno3ql" path="res://Scenes/Characters/player.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://o5buko4fsdcm" path="res://Scripts/camera_controller.gd" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://coxyqkgmst4dv" path="res://Scenes/Characters/Enemies/enemy.tscn" id="4_jjvhh"]
+[ext_resource type="Script" uid="uid://nxbhmyr3xpkc" path="res://Scripts/Characters/Enemy/enemy_spawner.gd" id="5_21xkr"]
+[ext_resource type="Script" uid="uid://b1abgkg6pm4ey" path="res://Scripts/Objects/node_pool.gd" id="5_kry3j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8gbba"]
 texture = ExtResource("1_jjgbg")
@@ -2943,3 +2945,29 @@ region_rect = Rect2(735, 608, 32, 31)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_jjvhh")
+
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("enemy_pool", "spawn_points")]
+script = ExtResource("5_21xkr")
+enemy_pool = NodePath("NodePool")
+spawn_points = [NodePath("EnemySpawnerPoint"), NodePath("EnemySpawnerPoint2"), NodePath("EnemySpawnerPoint3"), NodePath("EnemySpawnerPoint4")]
+
+[node name="SpawnTimer" type="Timer" parent="EnemySpawner"]
+
+[node name="EnemySpawnerPoint" type="Node2D" parent="EnemySpawner"]
+position = Vector2(-160, -127)
+
+[node name="EnemySpawnerPoint2" type="Node2D" parent="EnemySpawner"]
+position = Vector2(159, -127)
+
+[node name="EnemySpawnerPoint3" type="Node2D" parent="EnemySpawner"]
+position = Vector2(-161, 160)
+
+[node name="EnemySpawnerPoint4" type="Node2D" parent="EnemySpawner"]
+position = Vector2(158, 160)
+
+[node name="NodePool" type="Node" parent="EnemySpawner"]
+script = ExtResource("5_kry3j")
+node_scene = ExtResource("4_jjvhh")
+metadata/_custom_type_script = "uid://b1abgkg6pm4ey"
+
+[connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="_on_spawn_timer_timeout"]
